@@ -1,0 +1,173 @@
+// Available variables which can be used inside of strings.
+// ${workspaceFolder} - the path of the folder opened in VS Code
+//${workspaceFolderBasename} - the name of the folder opened in VS Code without any slashes (/)
+//${file} - the current opened file
+//${relativeFile} - the current opened file relative to workspaceFolder
+//${fileBasename} - the current opened file's basename
+//${fileBasenameNoExtension} - the current opened file's basename with no file extension
+//${fileDirname} - the current opened file's dirname
+//${fileExtname} - the current opened file's extension
+//${cwd} - the task runner's current working directory on startup
+//${lineNumber} - the current selected line number in the active file
+//${selectedText} - the current selected text in the active file
+//${execPath} - the path to the running VS Code executable
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    // Start PowerShell
+    "windows": {
+        "command": "${env:windir}/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "args": [
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-command"
+        ]
+    },
+    "linux": {
+        "command": "/usr/bin/pwsh",
+        "args": [
+            "-NoProfile"
+        ]
+    },
+    "osx": {
+        "command": "/usr/local/bin/pwsh",
+        "args": [
+            "-NoProfile"
+        ]
+    },
+    // The command is a shell script
+    "type": "shell",
+    // Show the output window always
+    "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": true,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "clear": true
+    },
+    // Associate with test task runner
+    "tasks": [
+        {
+            "label": "AllPesterTest",
+            "type": "shell",
+            "group": "test",
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "command": "Write-Host 'Invoking Pester...'; $ProgressPreference = 'SilentlyContinue'; Invoke-Pester -PesterOption @{IncludeVSCodeMarker=$true};Invoke-Command { Write-Host 'Completed Test task in task runner.' }",
+            "problemMatcher": "$pester"
+        },
+        {
+            "label": "Default",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "command": "Write-Host 'Invoking Default task...'; invoke-psake -buildFile '${workspaceFolder}/Build/Module.Build.ps1' -tasklist Default -verbose",
+            "problemMatcher": []
+        },
+        {
+            "label": "Init",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "command": "Write-Host 'Invoking Init task...'; invoke-psake -buildFile '${workspaceFolder}/Build/Module.Build.ps1' -tasklist Init -verbose",
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "command": "Write-Host 'Invoking Clean task...'; invoke-psake -buildFile '${workspaceFolder}/Build/Module.Build.ps1' -tasklist Clean -verbose",
+            "problemMatcher": []
+        },
+        {
+            "label": "BuildModule",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "command": "Write-Host 'Invoking BuildModule task...'; invoke-psake -buildFile '${workspaceFolder}/Build/Module.Build.ps1' -tasklist BuildManifest -verbose",
+            "problemMatcher": []
+        },
+        {
+            "label": "Testing",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "command": "Write-Host 'Invoking Testing task...'; invoke-psake -buildFile '${workspaceFolder}/Build/Module.Build.ps1' -tasklist Testing -verbose",
+            "problemMatcher": []
+        },
+        {
+            "label": "Deploy",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "command": "Write-Host 'Invoking Deploy task...'; invoke-psake -buildFile '${workspaceFolder}/Build/Module.Build.ps1' -tasklist Deploy -verbose -parameters @{'DeployType' = '${input:DeployType}'}",
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "DeployType",
+            "description": "What type of deploy do you want ?",
+            "default": "DEV",
+            "type": "pickString",
+            "options": [
+                "DEV",
+                "PROD",
+                "SUPPORT",
+                "PSGALLERY"
+            ]
+        }
+    ]
+}
