@@ -47,7 +47,7 @@ Class Date {
         Return $this.WorkingDays
     }
 
-    [datetime] FindFirstOrLastDayInMonth ([System.DayOfWeek]$Day, [System.String]$which) {
+    [datetime] FindFirstOrLastDay ([System.DayOfWeek]$Day, [System.String]$which) {
         $Now = ""
         switch ($which) {
             "First" {
