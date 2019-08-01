@@ -1,4 +1,4 @@
-function Find-FirstOrLastDay {
+function Find-DMFirstOrLastDay {
     <#
     .SYNOPSIS
         Find first or last day in a period
@@ -13,7 +13,7 @@ function Find-FirstOrLastDay {
     .EXAMPLE
         PS > $period = New-DMDate
         PS > $period.SetFirstDayAndLastDay()
-        PS > Write-Output (Find-FirstOrLastDay -Date $period -Day Monday -Which First)
+        PS > Write-Output (Find-DMFirstOrLastDay -Date $period -Day Monday -Which First)
 
         lundi 5 août 2019 00:00:00
 
@@ -21,7 +21,7 @@ function Find-FirstOrLastDay {
     .EXAMPLE
         PS > $period = New-DMDate -Date ((get-date).AddMonths(-1))
         PS > $period.SetFirstDayAndLastDay()
-        PS > Find-FirstOrLastDay -Date $period -Day Friday -Which Last
+        PS > Find-DMFirstOrLastDay -Date $period -Day Friday -Which Last
 
         vendredi 26 juillet 2019 23:59:59
 
