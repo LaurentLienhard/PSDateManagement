@@ -46,4 +46,29 @@ Class Date {
         }
         Return $this.WorkingDays
     }
+
+    [datetime] FindFirstOrLastDayInMonth ([System.DayOfWeek]$Day, [System.String]$which) {
+        $Now = ""
+        switch ($which) {
+            "First" {
+                $now = $this.FirstDay
+                while ($Now.DayOfWeek -ne $Day) {
+                    $now = $now.AddDays(1)
+                }
+            }
+            "Last" {
+                $now = $this.LastDay
+                while ($Now.DayOfWeek -ne $Day) {
+                    $now = $now.AddDays(-1)
+                }
+            }
+            Default {
+                $now = $this.FirstDay
+                while ($Now.DayOfWeek -ne $Day) {
+                    $now = $now.AddDays(1)
+                }
+            }
+        }
+        Return $Now
+    }
 }
