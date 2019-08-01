@@ -4,6 +4,7 @@ Class Date {
     [Datetime]$aDate
     hidden [System.Int32]$NumberOfDays
     hidden [System.Int32]$WorkingDays
+    hidden [System.DateTime]$FirstOrLastDay
 
     Date() {
         $this.aDate = Get-Date
@@ -48,27 +49,26 @@ Class Date {
     }
 
     [datetime] FindFirstOrLastDay ([System.DayOfWeek]$Day, [System.String]$which) {
-        $Now = ""
         switch ($which) {
             "First" {
-                $now = $this.FirstDay
-                while ($Now.DayOfWeek -ne $Day) {
-                    $now = $now.AddDays(1)
+                $This.FirstOrLastDay = $this.FirstDay
+                while ($This.FirstOrLastDay.DayOfWeek -ne $Day) {
+                    $This.FirstOrLastDay = $This.FirstOrLastDay.AddDays(1)
                 }
             }
             "Last" {
-                $now = $this.LastDay
-                while ($Now.DayOfWeek -ne $Day) {
-                    $now = $now.AddDays(-1)
+                $This.FirstOrLastDay = $this.LastDay
+                while ($This.FirstOrLastDay.DayOfWeek -ne $Day) {
+                    $This.FirstOrLastDay = $This.FirstOrLastDay.AddDays(-1)
                 }
             }
             Default {
-                $now = $this.FirstDay
-                while ($Now.DayOfWeek -ne $Day) {
-                    $now = $now.AddDays(1)
+                $This.FirstOrLastDay = $this.FirstDay
+                while ($This.FirstOrLastDay.DayOfWeek -ne $Day) {
+                    $This.FirstOrLastDay = $This.FirstOrLastDay.AddDays(1)
                 }
             }
         }
-        Return $Now
+        Return $This.FirstOrLastDay
     }
 }
