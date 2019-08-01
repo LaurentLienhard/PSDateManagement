@@ -1,4 +1,4 @@
 
-$result = New-DMDate
-$result.SetFirstDayAndLastDay()
-Write-Output (Find-FirstOrLastDay -Date $result -Day Monday -Which First)
+$period = New-DMDate
+$period.SetFirstDayAndLastDay()
+Write-Output (Find-FirstOrLastDay -Date $period -Day Monday -Which First)
