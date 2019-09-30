@@ -71,4 +71,33 @@ Class Date {
         }
         Return $This.FirstOrLastDay
     }
+    
+    static [String] IsItCoffeeTimeForLaurent () {
+
+        $date = Get-Date
+        $message = ''
+
+        Switch ( $date ) {
+            
+            { ($PSitem.Hour - 21) -eq 0 } {
+                Switch ( $date.Minute ) {
+                    { $PSitem -in (0..8) } { $Message = "Now is the Time !! "}
+                    { $PSitem -in (9..15) } { $Message = "Almost too late! Please hurry !! "}
+                    { $PSitem -in (16..59) } { $Message = "Now it's BEDTIME LAURENT !!"}
+                }
+            }
+
+            { ($PSitem.Hour - 21) -eq -1 } {
+                Switch ( $date.Minute ) {
+                    { $PSitem -in (51..59) } { $Message = "A little early but anyway.. COFFEE TIME !! "}
+                    { $PSitem -in (30..50) } { $Message = "Prepare yourself young MAN !"}
+                    { $PSitem -in (1..29) }  { $Message = "Sniff.. Sniff .. Can you smell that??"}
+                }
+            }
+
+            { ($PSitem.Hour - 21) -in (-22..-2) } { $Message = "Nope... "}
+            { ($PSitem.Hour - 21) -in (1..3) } { $Message = "Ouch... Too late buddy !!"}
+        }
+        return $message
+    }
 }
