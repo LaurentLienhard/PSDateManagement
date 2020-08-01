@@ -16,7 +16,7 @@ if (-not (Get-Module -Name PSDepend -ListAvailable)) {
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
     Install-module -Name PSDepend -Repository PSGallery -Scope CurrentUser
     Import-Module -Name PSDepend -Verbose:$false
-    Invoke-PSDepend -Path './Dependencies/requirements.psd1' -Install -Import -Force -WarningAction SilentlyContinue
+    Invoke-PSDepend -Path './requirements.psd1' -Install -Import -Force -WarningAction SilentlyContinue
     Write-Verbose "[BUILD] Install module dependecies done"
 } else {
     Write-Verbose "[BUILD] Dependencies allready installed"

@@ -1,6 +1,6 @@
 @{
     PSDependOptions  = @{
-        Target     = 'CurrentUser'
+        Target     = './Dependencies'
         Parameters = @{
             Force = $True
         }
