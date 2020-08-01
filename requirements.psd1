@@ -1,9 +1,6 @@
 @{
     PSDependOptions  = @{
-        Target     = './Dependencies'
-        Parameters = @{
-            Force = $True
-        }
+        Target = './Dependencies'
     }
 
 

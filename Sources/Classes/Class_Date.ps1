@@ -117,10 +117,12 @@ Class Date {
         return $message
     }
 
-    [System.String] ConvertTimeZone([system.String]$DateToConvert, [System.String]$FromTimeZone, [System.String]$ToTimeZone) {
+    [System.DateTime] ConvertTimeZone([System.DateTime]$DateToConvert, [System.String]$FromTimeZone, [System.String]$ToTimeZone) {
+        $DateToConvert = '{0:yyyy-MM-dd HH:MM:ss}' -f ($DateToConvert)
         $source = [System.TimeZoneInfo]::GetSystemTimeZones( ) | Where-Object { $_.id -eq $FromTimeZone }
         $dest = [System.TimeZoneInfo]::GetSystemTimeZones( ) | Where-Object { $_.id -eq $ToTimeZone }
-        $result = [System.TimeZoneInfo]::ConvertTime($DateToConvert, $source, $dest)
+        $res = [System.TimeZoneInfo]::ConvertTime($DateToConvert, $source, $dest)
+        $result = [Datetime]::ParseExact($res, 'yyyy-mm-dd HH:MM:ss', $null)
         return $result
     }
 }
